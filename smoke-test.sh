@@ -20,7 +20,8 @@ else
 fi
 
 echo "[3/5] No secrets hardcoded in repo"
-if grep -RIn "sk-\|AIza\|DEEPGRAM_API_KEY=.*[^$]" . --exclude-dir=.git --exclude=.env; then
+if git grep -n -E "sk-|AIza|DEEPGRAM_API_KEY=" >/dev/null; then
+  git grep -n -E "sk-|AIza|DEEPGRAM_API_KEY=" || true
   echo "Potential secret detected" >&2
   exit 1
 fi
