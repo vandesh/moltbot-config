@@ -133,4 +133,19 @@ git push -u origin main
 
 ---
 
+# ⚠️ IMPORTANT: Linger (Linux only)
+Linger keeps your **user systemd services running after logout**. Without it, the auto‑sync watcher runs only while you’re logged in.
+
+**Not included** in the One‑shot setup on purpose.
+
+### Enable (Linux)
+```bash
+bash enable-linger.sh
+```
+
+### macOS / Windows
+Not applicable.
+
+---
+
 If anything feels off, feel free to open a PR, or report, or better yet - use your own Clawd bot ❤️ to fix and PR 🛰️
