@@ -27,7 +27,8 @@ if git grep -n -E "sk-|AIza|DEEPGRAM_API_KEY=" -- . ':!:.env.example' ':!:smoke-
 fi
 
 echo "[4/5] Moltbot command usage in scripts"
-if grep -RIn "clawdbot gateway" .; then
+if git grep -n -E "clawdbot gateway" -- . ':!:smoke-test.sh' >/dev/null; then
+  git grep -n -E "clawdbot gateway" -- . ':!:smoke-test.sh' || true
   echo "Found clawdbot command usage" >&2
   exit 1
 fi
