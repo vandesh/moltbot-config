@@ -21,6 +21,7 @@ A clean, portable setup that keeps **secrets off GitHub** while making it easy t
 ### 🧩 Scripts (what they do)
 
 - **`apply-config.sh`** → loads `.env`, applies config, restarts gateway
+- **`apply-from-repo.sh`** → applies repo config to server + restarts gateway
 - **`install-service.sh`** → Linux systemd gateway service (moltbot)
 - **`install-service-macos.sh`** → macOS launchd gateway service (moltbot)
 - **`install-service-windows.ps1`** → Windows Scheduled Task (moltbot)
@@ -30,6 +31,8 @@ A clean, portable setup that keeps **secrets off GitHub** while making it easy t
 - **`smoke-test.sh`** → dry‑run checks (no system changes)
 
 ---
+
+# 🧭 Setup
 
 # 🌌 One‑shot setup (recommended)
 
@@ -99,7 +102,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 ---
 
-# 🔁 Auto‑sync config → Git (auto‑commit, no push)
+# ✨ Additional features
+
+## 🔁 Auto‑sync config → Git (auto‑commit, no push)
 
 ### Linux only
 
@@ -119,7 +124,15 @@ systemctl --user restart moltbot-config-sync.path
 
 ---
 
-# 🌍 First push to GitHub
+## 🧩 Apply repo config to server (single script)
+```bash
+bash apply-from-repo.sh
+```
+This copies `clawdbot.json` from the repo into `~/.clawdbot/` and restarts the gateway.
+
+---
+
+## 🌍 First push to GitHub
 
 ```bash
 cd ~/moltbot-config
@@ -129,7 +142,7 @@ git push -u origin main
 
 ---
 
-# 🧪 Quick sanity check
+## 🧪 Quick sanity check
 
 Run the dry‑run smoke test:
 ```bash
@@ -142,7 +155,7 @@ bash smoke-test.sh
 
 ---
 
-# ⚠️ IMPORTANT: Linger (Linux only)
+## ⚠️ IMPORTANT: Linger (Linux only)
 Linger keeps your **user systemd services running after logout**. Without it, the auto‑sync watcher runs only while you’re logged in.
 
 **Not included** in the One‑shot setup on purpose.
