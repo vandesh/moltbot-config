@@ -27,6 +27,8 @@ A clean, portable setup that keeps **secrets off GitHub** while making it easy t
 - **`install-service-windows.ps1`** → Windows Scheduled Task (moltbot)
 - **`install-config-sync.sh`** → Linux user service to auto‑commit config changes
 - **`sync-config.sh`** → sanitizes secrets → commits updated config
+- **`install-config-sync-autopush.sh`** → Linux user service to auto‑commit **and push**
+- **`sync-config-push.sh`** → sync + push (requires git creds)
 - **`stellar-setup.sh`** → one‑shot “new server” setup (auto‑detects OS)
 - **`smoke-test.sh`** → dry‑run checks (no system changes)
 
@@ -112,14 +114,25 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 bash install-config-sync.sh
 # Optional: keep user services running after logout
 sudo loginctl enable-linger $USER
-
-NOTE: This sync watcher is **not** renamed automatically by one‑shot setup.
 ```
 
 Manual restart (if needed):
 
 ```bash
 systemctl --user restart moltbot-config-sync.path
+```
+
+---
+
+## 🚀 Auto‑sync + auto‑push (Linux only)
+```bash
+bash install-config-sync-autopush.sh
+```
+Requires git credentials configured for push.
+
+Manual restart:
+```bash
+systemctl --user restart moltbot-config-sync-push.path
 ```
 
 ---

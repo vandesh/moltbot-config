@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch Moltbot config for changes (sync + push)
+
+[Path]
+PathChanged=%h/.clawdbot/clawdbot.json
+
+[Install]
+WantedBy=default.target
