@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch Clawdbot config for changes
+
+[Path]
+PathChanged=%h/.clawdbot/clawdbot.json
+
+[Install]
+WantedBy=default.target

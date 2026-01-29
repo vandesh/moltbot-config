@@ -1,0 +1,136 @@
+# 🚀 Clawdbot Config — Cosmic Edition
+
+A clean, portable setup that keeps **secrets off GitHub** while making it easy to move Clawdbot to any server.
+
+✅ Syncs Clawdbot config to a Git repo with a **single setup**
+
+✅ Creates a service to **auto‑start** Clawdbot
+
+✅ Creates and auto‑runs a **config sync watcher** (Linux)
+
+✅ Works across **Linux / macOS / Windows**
+
+---
+
+## 🗂️ What’s in this repo?
+
+- **`clawdbot.json`** → tracked config with `${VAR}` placeholders (no secrets)
+- **`.env`** → **not tracked**, holds secrets on your machine
+- **`.env.example`** → template for new servers (fill `CLAWDBOT_WORKSPACE` too)
+
+### 🧩 Scripts (what they do)
+
+- **`apply-config.sh`** → loads `.env`, applies config, restarts gateway
+- **`install-service.sh`** → Linux systemd gateway service
+- **`install-service-macos.sh`** → macOS launchd gateway service
+- **`install-service-windows.ps1`** → Windows Scheduled Task
+- **`install-config-sync.sh`** → Linux user service to auto‑commit config changes
+- **`sync-config.sh`** → sanitizes secrets → commits updated config
+- **`stellar-setup.sh`** → one‑shot “new server” setup (auto‑detects OS)
+
+---
+
+# 🌌 One‑shot setup (recommended)
+
+> Works on Linux/macOS. On Windows, run the PowerShell script.
+
+### 🐧 Linux / 🍎 macOS
+
+```bash
+bash stellar-setup.sh
+```
+
+### 🪟 Windows (PowerShell Admin)
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\install-service-windows.ps1
+```
+
+---
+
+# ✅ Step‑by‑step setup (open‑source flow)
+
+Assume you already know Git. Fork/clone first, then follow these steps.
+
+## 1) Clone your repo
+
+```bash
+git clone <YOUR_GIT_URL> ~/clawdbot-config
+cd ~/clawdbot-config
+```
+
+## 2) Add secrets locally (not in Git)
+
+```bash
+cp .env.example .env
+# edit .env and fill secrets
+```
+
+## 3) Apply config
+
+```bash
+bash apply-config.sh
+```
+
+## 4) Install auto‑start service
+
+### 🐧 Linux (systemd)
+
+```bash
+sudo bash install-service.sh
+```
+
+### 🍎 macOS (launchd)
+
+```bash
+bash install-service-macos.sh
+```
+
+### 🪟 Windows (Scheduled Task)
+
+```powershell
+# Run PowerShell as Administrator
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\install-service-windows.ps1
+```
+
+---
+
+# 🔁 Auto‑sync config → Git (auto‑commit, no push)
+
+### Linux only
+
+```bash
+bash install-config-sync.sh
+# Optional: keep user services running after logout
+sudo loginctl enable-linger $USER
+```
+
+Manual restart (if needed):
+
+```bash
+systemctl --user restart clawdbot-config-sync.path
+```
+
+---
+
+# 🌍 First push to GitHub
+
+```bash
+cd ~/clawdbot-config
+git remote add origin <YOUR_GIT_URL>
+git push -u origin main
+```
+
+---
+
+# 🧪 Quick sanity check
+
+- `.env` **never** goes into Git (gitignored)
+- `clawdbot.json` uses **`${VAR}` placeholders**
+- Gateway restarts cleanly
+
+---
+
+If anything feels off, feel free to open a PR, or report, or better yet - use your own Clawd bot ❤️ to fix and PR 🛰️
